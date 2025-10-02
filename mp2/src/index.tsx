@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { PokemonProvider } from "./context/pokemon_context"
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter basename="/CS409-mp2">
-    <App />
+      <PokemonProvider>
+        <App />
+      </PokemonProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
