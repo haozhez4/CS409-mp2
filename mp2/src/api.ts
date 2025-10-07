@@ -1,24 +1,31 @@
 import axios from "axios";
-import { PokemonListItem, PokemonDetail } from "./types";
+import { PokemonDetail } from "./types";
 
 const api = axios.create({ baseURL: "https://pokeapi.co/api/v2" });
-const BASE = "https://pokeapi.co/api/v2";
 
-// export async function getPokemonList(limit = 151, offset = 0): Promise<PokemonListItem[]> {
-//   const { data } = await api.get(`/pokemon?limit=${limit}&offset=${offset}`);
-//   return data.results;
-// }
-export async function getPokemonList(limit = 500, offset = 0) {
-  const { data } = await axios.get(`${BASE}/pokemon`, {
-    params: { limit, offset },
-  });
-  return data.results as { name: string; url: string }[];
+export type BasicPokemon = {
+  name: string;
+  url: string;
+  id: number;
+};
+
+export async function getPokemonList(
+  limit = 500,
+  offset = 0
+): Promise<BasicPokemon[]> {
+  const { data } = await api.get("/pokemon", { params: { limit, offset } });
+  // results: [{ name, url }]
+  return (data.results as { name: string; url: string }[]).map((r) => ({
+    ...r,
+    id: Number(r.url.match(/\/pokemon\/(\d+)\//)?.[1] ?? 0),
+  }));
 }
 
 const detailCache = new Map<string, PokemonDetail>();
 
 export async function getPokemonDetail(name: string): Promise<PokemonDetail> {
-  if (detailCache.has(name)) return detailCache.get(name)!;
+  const cached = detailCache.get(name);
+  if (cached) return cached;
 
   const { data } = await api.get(`/pokemon/${name}`);
   const detail: PokemonDetail = {
