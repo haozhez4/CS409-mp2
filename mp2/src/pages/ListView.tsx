@@ -11,10 +11,6 @@ export default function ListView() {
     useState<"name" | "id" >("name");
   const [order, setOrder] = useState<"asc" | "desc">("asc");
 
-  const filtered = useMemo(
-    () => list.filter((p) => p.name.toLowerCase().includes(q.toLowerCase())),
-    [q, list]
-  );
 
   const withId = useMemo(() => {
     return (list || []).map((p: any) => {
@@ -24,6 +20,13 @@ export default function ListView() {
       return { ...p, id };
     });
   }, [list]);
+
+  const filtered = useMemo(() => {
+    const key = q.trim().toLowerCase();
+    const base = withId;
+    if (!key) return base;
+    return base.filter((p: any) => p.name.toLowerCase().includes(key));
+  }, [withId, q]);
 
 
   const sorted = useMemo(() => {
