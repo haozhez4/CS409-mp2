@@ -8,7 +8,7 @@ export default function ListView() {
   const { list } = usePokemon();
   const [q, setQ] = useState("");
   const [sortKey, setSortKey] =
-    useState<"name" | "id" | "base_experience">("name");
+    useState<"name" | "id" >("name");
   const [order, setOrder] = useState<"asc" | "desc">("asc");
 
   const filtered = useMemo(
@@ -31,9 +31,6 @@ export default function ListView() {
       if (sortKey === "name") {
         av = a.name;
         bv = b.name;
-      } else if (sortKey === "id") {
-        av = a.id;
-        bv = b.id;
       } else {
         av = 0;
         bv = 0;

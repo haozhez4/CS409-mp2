@@ -1,6 +1,6 @@
 import React from "react";
 
-type SortKey = "name" | "id" | "base_experience";
+type SortKey = "name" | "id" ;
 
 type Props = {
   sortKey: SortKey;
@@ -25,7 +25,6 @@ export default function SortControls({
       >
         <option value="name">Name</option>
         <option value="id">ID</option>
-        <option value="base_experience">Base EXP</option>
       </select>
       <button
         className="btn"
