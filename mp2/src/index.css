@@ -154,3 +154,16 @@ nav{
   color: var(--muted, #9bb0d3);
   font-size: 14px;
 }
+
+select {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+select option {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
