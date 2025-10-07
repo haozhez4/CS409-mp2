@@ -10,15 +10,26 @@ import DetailView from "./pages/DetailView";
 export default function App() {
   return (
     <>
-      <nav style={{display:"flex",gap:12,padding:12,borderBottom:"1px solid #eee"}}>
-        <NavLink to="/" end>List</NavLink>
-        <NavLink to="/gallery">Gallery</NavLink>
+      <header className="site-header">
+        <h1 className="site-title">Pokémon Directory</h1>
+        <p className="site-subtitle">Search • Sort • Explore your Pokédex</p>
+      </header>
+
+      <nav>
+        <div className="nav">
+          <NavLink to="/" end>List</NavLink>
+          <NavLink to="/gallery">Gallery</NavLink>
+        </div>
       </nav>
-      <Routes>
-        <Route path="/" element={<ListView/>}/>
-        <Route path="/gallery" element={<GalleryView/>}/>
-        <Route path="/pokemon/:name" element={<DetailView/>}/>
-      </Routes>
+
+
+      <main className="app">
+        <Routes>
+          <Route path="/" element={<ListView />} />
+          <Route path="/gallery" element={<GalleryView />} />
+          <Route path="/pokemon/:name" element={<DetailView />} />
+        </Routes>
+      </main>
     </>
   );
 }

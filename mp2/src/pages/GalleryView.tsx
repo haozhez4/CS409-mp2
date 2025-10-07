@@ -13,7 +13,7 @@ export default function GalleryView() {
   useEffect(() => {
     let alive = true;
     (async () => {
-      const first = list.slice(0, 151);
+      const first = list.slice(0, 1000);
       const results = await Promise.all(
         first.map(async (p) => {
           try {

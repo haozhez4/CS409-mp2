@@ -2,10 +2,17 @@ import axios from "axios";
 import { PokemonListItem, PokemonDetail } from "./types";
 
 const api = axios.create({ baseURL: "https://pokeapi.co/api/v2" });
+const BASE = "https://pokeapi.co/api/v2";
 
-export async function getPokemonList(limit = 151, offset = 0): Promise<PokemonListItem[]> {
-  const { data } = await api.get(`/pokemon?limit=${limit}&offset=${offset}`);
-  return data.results;
+// export async function getPokemonList(limit = 151, offset = 0): Promise<PokemonListItem[]> {
+//   const { data } = await api.get(`/pokemon?limit=${limit}&offset=${offset}`);
+//   return data.results;
+// }
+export async function getPokemonList(limit = 500, offset = 0) {
+  const { data } = await axios.get(`${BASE}/pokemon`, {
+    params: { limit, offset },
+  });
+  return data.results as { name: string; url: string }[];
 }
 
 const detailCache = new Map<string, PokemonDetail>();

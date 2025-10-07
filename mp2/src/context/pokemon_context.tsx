@@ -17,6 +17,7 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const LIMIT = 500; 
     getPokemonList().then((data) => {
       setList(data);
       setLoading(false);
