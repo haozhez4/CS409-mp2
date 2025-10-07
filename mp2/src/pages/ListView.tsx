@@ -16,29 +16,32 @@ export default function ListView() {
     [q, list]
   );
 
-  const withId = useMemo(
-    () =>
-      filtered.map((p) => ({
-        ...p,
-        id: Number((p.url.match(/\/pokemon\/(\d+)\/?$/) || [])[1] || 0),
-      })),
-    [filtered]
-  );
+  const withId = useMemo(() => {
+    return (list || []).map((p: any) => {
+      if (p.id != null) return { ...p, id: Number(p.id) };
+      const m = p.url?.match(/\/pokemon\/(\d+)\//);
+      const id = m ? Number(m[1]) : 0;
+      return { ...p, id };
+    });
+  }, [list]);
+
 
   const sorted = useMemo(() => {
-    return [...withId].sort((a: any, b: any) => {
-      let av: any, bv: any;
+    const factor = order === "asc" ? 1 : -1;
+    const arr = [...filtered];
+
+    arr.sort((a: any, b: any) => {
       if (sortKey === "name") {
-        av = a.name;
-        bv = b.name;
-      } else {
-        av = 0;
-        bv = 0;
+        return a.name.localeCompare(b.name) * factor;
       }
-      const cmp = av > bv ? 1 : av < bv ? -1 : 0;
-      return order === "asc" ? cmp : -cmp;
+      const ai = Number(a.id ?? 0);
+      const bi = Number(b.id ?? 0);
+      return (ai - bi) * factor;
     });
-  }, [withId, sortKey, order]);
+
+    return arr;
+  }, [filtered, sortKey, order]);
+
 
   return (
     <section>
